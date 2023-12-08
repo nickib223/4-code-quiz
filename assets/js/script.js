@@ -7,6 +7,8 @@ var countDownTimer = document.querySelector("#timer")
 var timeLeft = 60
 var correctAnswer = document.querySelector("#correct-answer")
 //create a variable for any piece of the page that needs to be manipulated by JS
+//{} connected to a variable = object
+//.innerHTML clears any HTML inside the element
 
 var questions = [
     {
@@ -18,20 +20,16 @@ var questions = [
         prompt:"What is a function", 
         choices:["5", "6", "7", "8"],
         answer:"8",
-    }
-    //{} connected to a variable = object
+    }  
 ]
 
 console.log(startButton, startScreen)
 startButton.addEventListener("click", function(){
-    console.log("test")
     startScreen.classList.add("hide");
-    questionScreen.classList.remove("hide")
     displayQuestion()
 
 var timeInterval = setInterval(function() {
     timeLeft--
-    console.log(timeLeft)
     countDownTimer.innerText = timeLeft
 
     if (timeLeft < 1) {
@@ -42,20 +40,10 @@ var timeInterval = setInterval(function() {
 
 })
 
-function displayNextQuestion() {
-    if (currentQuestionIndex + 1 < questions.length) {
-        currentQuestionIndex++;
-        displayQuestion();
-    }else {
-        //go to save screen
-    }
-}
-
 function displayQuestion(){
+    console.log(currentQuestionIndex)
     questionScreen.classList.remove("hide")
-    questionScreen.innerHTML = ""
-    //.innerHTML clears any HTML inside the element
-    
+    questionScreen.innerHTML = ""  
     var promptEl = document.createElement("h2")
 
     promptEl.textContent = questions[currentQuestionIndex].prompt
@@ -71,33 +59,48 @@ function displayQuestion(){
 }
 
 function checkAnswer(event) {
-    if (currentQuestionIndex < questions.length) {
-        console.log(event.target)
         if(event.target.value === questions[currentQuestionIndex].answer){
             correctAnswer.innerText = "That is correct!"
-                        //todo: once innertext is presented move on to next question
             console.log("correct")
         }else {
             correctAnswer.innerText = "That is incorrect."
             timeLeft = timeLeft - 5
             console.log("incorrect")}
-
-         
-            clearInterval(timeInterval)
-            timeInterval.innerText = "Your score is" + timeLeft
-            return
-        // todo: show correct answer
-    }else {
-        currentQuestionIndex++;
-        displayQuestion()
-
-    } 
+// todo: show correct answer
+        currentQuestionIndex++; 
+        console.log(currentQuestionIndex);
+        displayQuestion();
 }
-    //todo:paragraph correct-answer in quiz-container article
+
+function endQuiz() {
+
+}
+    
+// if (currentQuestionIndex < questions.length + 1) {
+    //     console.log(event.target)
+
+
+// clearInterval(timeInterval)
+            // timeInterval.innerText = "Your score is" + timeLeft
+            // return
+
+
+
+
+//todo:paragraph correct-answer in quiz-container article
 
     //add 1 to currentQuestionIndex since it is a 0 index and .length starts at 1
 
         // todo: show result page hide question section and show results
         // TODO: return to stop quiz when questions are out - store scores
-      
+//variables
+//functions      
+//event listeners bottom
 
+        // startGame
+        // runTimer
+        // displayQuestion
+        // checkAnswer
+        // gameOver
+        // saveScore
+        // displayHighScore
