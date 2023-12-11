@@ -50,12 +50,13 @@ var questions = [
 
 function startGame(){
     startButton.classList.add("hide");
+    countDownTimer.classList.remove("hide");
     setTimer();
     displayQuestion();
-    // startScreen.classList.add("hide");
 }
 
 function setTimer(){
+    
     timeInterval = setInterval(function(){
         timeLeft--;
         countDownTimer.innerText = timeLeft;
@@ -84,7 +85,6 @@ function displayQuestion(){
             questionScreen.append(button);
         }
     }else {
-        questionScreen.classList.add("hide");
         endQuiz();
     }
 }
@@ -106,7 +106,6 @@ function checkAnswer(event) {
 
 
 function saveScore(){
-    questionScreen.classList.add("hide");
     highScores.classList.remove("hide");
     var userInitials = prompt("Please enter your initials: ");
 
@@ -153,6 +152,10 @@ function showHighScores(){
 }
 
 function endQuiz() {    
+    countDownTimer.classList.add("hide");
+    correctAnswer.classList.add("hide");
+    questionScreen.classList.add("hide");
+    finalScore.classList.add("hide");
     clearInterval(timeInterval);
     finalScore.innerText = "Final Score:" + timeLeft;
     saveScore();
