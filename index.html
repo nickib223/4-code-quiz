@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <title>Code Quiz</title>
+</head>
+<body>
+    <div id="quiz-wrapper">
+        <!-- Container for the full quiz interface -->
+        <article id="start-screen">
+            <header>
+                <h1>Code Quiz</h1>
+            </header>
+            <button id="start-button" class="hide">Start</button>
+        </article>
+
+        <article id="quiz-container" class="hide">
+            <!-- Question bar and buttons -->
+            <h2 id="prompt"></h2>
+            <ul></ul>
+            <button id="next-question-button">Next Question</button>
+        </article>
+
+        <!-- Container for time clock -->
+        <p id="timer">60</p>
+
+        <p id="final-score"></p>
+
+        <!-- Save button -->
+        <button id="save-score">Save</button>
+        
+        <!-- Display correct answer message -->
+        <p id="correct-answer"></p>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>

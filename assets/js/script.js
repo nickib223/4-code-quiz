@@ -1,11 +1,13 @@
 var startButton = document.querySelector("#start-button");
 //querySelector targets HTML file elements
 var startScreen = document.querySelector("#start-screen");
-var questionScreen = document.querySelector("#quiz-container")
-var currentQuestionIndex = 0
-var countDownTimer = document.querySelector("#timer")
-var timeLeft = 60
-var correctAnswer = document.querySelector("#correct-answer")
+var questionScreen = document.querySelector("#quiz-container");
+var currentQuestionIndex = 0;
+var countDownTimer = document.querySelector("#timer");
+var timeLeft = 60;
+var correctAnswer = document.querySelector("#correct-answer");
+var finalScore = document.querySelector("#final-score");
+var saveScore = document.querySelector("#save-score");
 //create a variable for any piece of the page that needs to be manipulated by JS
 //{} connected to a variable = object
 //.innerHTML clears any HTML inside the element
@@ -20,15 +22,44 @@ var questions = [
         prompt:"What is a function", 
         choices:["5", "6", "7", "8"],
         answer:"8",
-    }  
+    },  
+    {
+        prompt:"How do I do any of this", 
+        choices:["5", "6", "7", "8"],
+        answer:"8",
+    },  
+    {
+        prompt:"It's so hard", 
+        choices:["5", "6", "7", "8"],
+        answer:"8",
+    },  
+    {
+        prompt:"Why did I pay money to be tortured", 
+        choices:["5", "6", "7", "8"],
+        answer:"8",
+    },  
+    {
+        prompt:"This is so hard", 
+        choices:["5", "6", "7", "8"],
+        answer:"8",
+    },
+    {
+        prompt:"Like really", 
+        choices:["5", "6", "7", "8"],
+        answer:"8",
+    }   
 ]
 
-console.log(startButton, startScreen)
 startButton.addEventListener("click", function(){
+    console.log("Clicked start button")
     startScreen.classList.add("hide");
-    displayQuestion()
+    displayQuestion();
+//bug here - why will start button not hide?
+//could you do some kind of if statement to help hide the start button?
+    startButton.classList.add("hidden");
+    console.log (startButton);
 
-var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
     timeLeft--
     countDownTimer.innerText = timeLeft
 
@@ -37,44 +68,56 @@ var timeInterval = setInterval(function() {
         countDownTimer.innerText = "Time's Up!"
     }
 }, 1000)
-
 })
 
 function displayQuestion(){
-    console.log(currentQuestionIndex)
-    questionScreen.classList.remove("hide")
-    questionScreen.innerHTML = ""  
-    var promptEl = document.createElement("h2")
+    if(currentQuestionIndex < questions.length) {
+        questionScreen.classList.remove("hide");
+        questionScreen.innerHTML = ""; 
+        var promptEl = document.createElement("h2");
 
-    promptEl.textContent = questions[currentQuestionIndex].prompt
-    questionScreen.append(promptEl)
+        promptEl.textContent = questions[currentQuestionIndex].prompt;
+        questionScreen.append(promptEl);
 
-    for (var i =0; i < 4; i++) {
-        var button = document.createElement("button")
-        button.textContent = questions[currentQuestionIndex].choices[i]
-        button.value = questions[currentQuestionIndex].choices[i]
-        button.addEventListener("click", checkAnswer)
-        questionScreen.append(button)
+        for (var i =0; i < 4; i++) {
+            var button = document.createElement("button");
+            button.textContent = questions[currentQuestionIndex].choices[i];
+            button.value = questions[currentQuestionIndex].choices[i];
+            button.addEventListener("click", checkAnswer);
+            questionScreen.append(button);
+        }
+    }else {
+        endQuiz();
     }
 }
 
 function checkAnswer(event) {
-        if(event.target.value === questions[currentQuestionIndex].answer){
-            correctAnswer.innerText = "That is correct!"
-            console.log("correct")
-        }else {
-            correctAnswer.innerText = "That is incorrect."
-            timeLeft = timeLeft - 5
-            console.log("incorrect")}
+    if(event.target.value === questions[currentQuestionIndex].answer){
+        correctAnswer.innerText = "That is correct! ";
+    }else {
+        correctAnswer.innerText = "That is incorrect. ";
+        timeLeft = Math.max(0, timeLeft - 5);
+    }
+
+    correctAnswer.innerText += "  Correct answer: " + questions[currentQuestionIndex].answer;
 // todo: show correct answer
-        currentQuestionIndex++; 
-        console.log(currentQuestionIndex);
-        displayQuestion();
+    currentQuestionIndex++; 
+    displayQuestion();
 }
 
 function endQuiz() {
+        
+    clearInterval(timeInterval);
+    finalScore.innerText = "Final Score:" + timeLeft;
 
+    console.log("quiz ended");
+    
 }
+
+saveScore.addEventListener("click", function(){
+    questionScreen.classList.add("hide");
+})
+
     
 // if (currentQuestionIndex < questions.length + 1) {
     //     console.log(event.target)
