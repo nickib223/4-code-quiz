@@ -1,7 +1,23 @@
+* {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    box-sizing:border-box;
+    text-align: center;
+  }
+
+body {
+    background-color: rgb(250, 234, 237);
+    
+
+}
+
 .hide {
     display: none;
 }
 
-body {
-    /* background-color: crimson; */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
 }

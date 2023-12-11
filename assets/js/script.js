@@ -1,5 +1,4 @@
 var startButton = document.querySelector("#start-button");
-//querySelector targets HTML file elements
 var startScreen = document.querySelector("#start-screen");
 var questionScreen = document.querySelector("#question-screen");
 var currentQuestionIndex = 0;
@@ -8,7 +7,7 @@ var timeLeft = 60;
 var correctAnswer = document.querySelector("#correct-answer");
 var finalScore = document.querySelector("#final-score");
 var highScores = document.querySelector("#high-scores");
-// var scoreScreen = document.querySelector("#score-screen");
+var highScoresTitle = document.querySelector("#high-score-title");
 
 var questions = [
     {
@@ -47,7 +46,7 @@ var questions = [
     {
         prompt:"What does HTML stand for?", 
         choices:["A: Hyperlinks and Text Markup Language", "B: HyperText Markup Language", "C: HomeText Made Language", "D: HyperTax Made Language"],
-        answer:"B: HyperText Markup Language"",
+        answer:"B: HyperText Markup Language"
     },   
     {
         prompt:"What is zero-based indexing?", 
@@ -70,7 +69,7 @@ var questions = [
 ]
 
 function startGame(){
-    startButton.classList.add("hide");
+    document.querySelector("#start-button").disabled = true;
     countDownTimer.classList.remove("hide");
     setTimer();
     displayQuestion();
@@ -124,8 +123,6 @@ function checkAnswer(event) {
     displayQuestion();
 }
 
-
-
 function saveScore(){
     highScores.classList.remove("hide");
     var userInitials = prompt("Please enter your initials: ");
@@ -151,12 +148,12 @@ function saveScore(){
     }else{
         alert("Something went wrong. Score not saved. Please re-enter your initials.");
     }
-    
+
     showHighScores();
 }
 
 function showHighScores(){
-    
+    highScoresTitle.classList.remove("hide");
     //retrieve scores that are saved in local storage
     var savedlocalScores = JSON.parse(localStorage.getItem("quizScores")) || [];
 
@@ -168,8 +165,8 @@ function showHighScores(){
         var scoreItem = document.createElement("li");
         scoreItem.textContent = userScoreData.initials + userScoreData.score;
         highScores.appendChild(scoreItem);
+        
     });
-    console.log ("I'm being hidden!")
 }
 
 function endQuiz() {    
@@ -179,9 +176,7 @@ function endQuiz() {
     finalScore.classList.add("hide");
     clearInterval(timeInterval);
     finalScore.innerText = "Final Score:" + timeLeft;
-    saveScore();
-    
-    
+    saveScore();    
 }
 
 startButton.addEventListener("click", function(){
