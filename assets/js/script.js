@@ -7,7 +7,7 @@ var countDownTimer = document.querySelector("#timer");
 var timeLeft = 60;
 var correctAnswer = document.querySelector("#correct-answer");
 var finalScore = document.querySelector("#final-score");
-var saveScoreButton = document.querySelector("#save-score");
+var highScores = document.querySelector("#high-scores")
 
 var questions = [
     {
@@ -47,12 +47,9 @@ var questions = [
     }   
 ]
 
-  
-
-
 function startGame(){
     document.querySelector("#start-button").disabled = true;
-    
+    // startButton.classList.remove("hide");
     setTimer();
     displayQuestion();
     // startScreen.classList.add("hide");
@@ -104,14 +101,7 @@ function checkAnswer(event) {
     displayQuestion();
 }
 
-function endQuiz() {
-        
-    clearInterval(timeInterval);
-    finalScore.innerText = "Final Score:" + timeLeft;
 
-    console.log("quiz ended");
-    
-}
 
 function saveScore(){
     var userInitials = prompt("Please enter your initials: ");
@@ -137,20 +127,38 @@ function saveScore(){
     }else{
         alert("Something went wrong. Score not saved. Please re-enter your initials.");
     }
-
 }
 
-function displayScores(){
+function showHighScores(){
+    //retrieve scores that are saved in local storage
+    var savedlocalScores = JSON.parse(localStorage.getItem("quizScores")) || [];
 
+    //clear current list
+    highScores.innerHTML = "";
+
+    //create an HTML element for each score and append it to the highScores
+    savedlocalScores.forEach(function(userScoreData) {
+        var scoreItem = document.createElement("li");
+        scoreItem.textContent = userScoreData.initials + userScoreData.score;
+        highScores.appendChild(scoreItem);
+    });
+}
+
+function endQuiz() {
+        
+    clearInterval(timeInterval);
+    finalScore.innerText = "Final Score:" + timeLeft;
+    saveScore();
+    showHighScores();
+    
 }
 
 startButton.addEventListener("click", function(){
     console.log("Clicked start button")
     
+    
     startGame();
 })  
-
-saveScoreButton.addEventListener("click", saveScore);
 
     //add 1 to currentQuestionIndex since it is a 0 index and .length starts at 1
 
