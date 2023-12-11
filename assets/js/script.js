@@ -53,22 +53,48 @@ var questions = [
 startButton.addEventListener("click", function(){
     console.log("Clicked start button")
     startScreen.classList.add("hide");
-    displayQuestion();
-//bug here - why will start button not hide?
-//could you do some kind of if statement to help hide the start button?
+    startGame();
+
     startButton.classList.add("hidden");
     console.log (startButton);
+})    
 
-    timeInterval = setInterval(function() {
-    timeLeft--
-    countDownTimer.innerText = timeLeft
 
-    if (timeLeft < 1) {
-        clearInterval(timeInterval)
-        countDownTimer.innerText = "Time's Up!"
-    }
-}, 1000)
-})
+function startGame(){
+    startButton.addEventListener("click", function(){
+        console.log("clicked");
+        startScreen.classList.add("hide");
+    })
+    document.querySelector("#start-button").disabled = true;
+
+    setTimer();
+    displayQuestion();
+}
+
+function setTimer(){
+    timeInterval = setInterval(function(){
+        timeLeft--;
+        countDownTimer.innerText = timeLeft;
+
+        if (timeLeft < 1) {
+            clearInterval(timeInterval);
+            countDownTimer.innerText = "Sorry, your time is up!";
+        }
+    }, 1000)
+}
+
+
+
+//     timeInterval = setInterval(function() {
+//     timeLeft--;
+//     countDownTimer.innerText = timeLeft;
+
+//     if (timeLeft < 1) {
+//         clearInterval(timeInterval);
+//         countDownTimer.innerText = "Time's Up!";
+//     }
+// }, 1000)
+
 
 function displayQuestion(){
     if(currentQuestionIndex < questions.length) {
