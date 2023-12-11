@@ -7,10 +7,7 @@ var countDownTimer = document.querySelector("#timer");
 var timeLeft = 60;
 var correctAnswer = document.querySelector("#correct-answer");
 var finalScore = document.querySelector("#final-score");
-var saveScore = document.querySelector("#save-score");
-//create a variable for any piece of the page that needs to be manipulated by JS
-//{} connected to a variable = object
-//.innerHTML clears any HTML inside the element
+var saveScoreButton = document.querySelector("#save-score");
 
 var questions = [
     {
@@ -50,25 +47,15 @@ var questions = [
     }   
 ]
 
-startButton.addEventListener("click", function(){
-    console.log("Clicked start button")
-    startScreen.classList.add("hide");
-    startGame();
-
-    startButton.classList.add("hidden");
-    console.log (startButton);
-})    
+  
 
 
 function startGame(){
-    startButton.addEventListener("click", function(){
-        console.log("clicked");
-        startScreen.classList.add("hide");
-    })
     document.querySelector("#start-button").disabled = true;
-
+    
     setTimer();
     displayQuestion();
+    // startScreen.classList.add("hide");
 }
 
 function setTimer(){
@@ -82,19 +69,6 @@ function setTimer(){
         }
     }, 1000)
 }
-
-
-
-//     timeInterval = setInterval(function() {
-//     timeLeft--;
-//     countDownTimer.innerText = timeLeft;
-
-//     if (timeLeft < 1) {
-//         clearInterval(timeInterval);
-//         countDownTimer.innerText = "Time's Up!";
-//     }
-// }, 1000)
-
 
 function displayQuestion(){
     if(currentQuestionIndex < questions.length) {
@@ -126,7 +100,6 @@ function checkAnswer(event) {
     }
 
     correctAnswer.innerText += "  Correct answer: " + questions[currentQuestionIndex].answer;
-// todo: show correct answer
     currentQuestionIndex++; 
     displayQuestion();
 }
@@ -140,31 +113,48 @@ function endQuiz() {
     
 }
 
-saveScore.addEventListener("click", function(){
-    questionScreen.classList.add("hide");
-})
+function saveScore(){
+    var userInitials = prompt("Please enter your initials: ");
 
+    if (userInitials) {
+        //Save the current game's initials/score to local storage
+        var userScoreData = {
+            initials: userInitials,
+            score: timeLeft
+        };
+
+        //retrieve any previously stored scores from local storage
+        var localScores = JSON.parse(localStorage.getItem("quizScores")) || [];
+
+        //add current score to local storage list
+        localScores.push(userScoreData);
+
+        //save existing and updated scores back to local storage
+        localStorage.setItem("quizScores", JSON.stringify(localScores));
+
+        //let user know the information was saved
+        alert("User initials and score successfully saved.");
+    }else{
+        alert("Something went wrong. Score not saved. Please re-enter your initials.");
+    }
+
+}
+
+function displayScores(){
+
+}
+
+startButton.addEventListener("click", function(){
+    console.log("Clicked start button")
     
-// if (currentQuestionIndex < questions.length + 1) {
-    //     console.log(event.target)
+    startGame();
+})  
 
-
-// clearInterval(timeInterval)
-            // timeInterval.innerText = "Your score is" + timeLeft
-            // return
-
-
-
-
-//todo:paragraph correct-answer in quiz-container article
+saveScoreButton.addEventListener("click", saveScore);
 
     //add 1 to currentQuestionIndex since it is a 0 index and .length starts at 1
 
         // todo: show result page hide question section and show results
-        // TODO: return to stop quiz when questions are out - store scores
-//variables
-//functions      
-//event listeners bottom
 
         // startGame
         // runTimer
