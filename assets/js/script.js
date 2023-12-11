@@ -1,13 +1,14 @@
 var startButton = document.querySelector("#start-button");
 //querySelector targets HTML file elements
 var startScreen = document.querySelector("#start-screen");
-var questionScreen = document.querySelector("#quiz-container");
+var questionScreen = document.querySelector("#question-screen");
 var currentQuestionIndex = 0;
 var countDownTimer = document.querySelector("#timer");
 var timeLeft = 60;
 var correctAnswer = document.querySelector("#correct-answer");
 var finalScore = document.querySelector("#final-score");
-var highScores = document.querySelector("#high-scores")
+var highScores = document.querySelector("#high-scores");
+// var scoreScreen = document.querySelector("#score-screen");
 
 var questions = [
     {
@@ -48,8 +49,7 @@ var questions = [
 ]
 
 function startGame(){
-    document.querySelector("#start-button").disabled = true;
-    // startButton.classList.remove("hide");
+    startButton.classList.add("hide");
     setTimer();
     displayQuestion();
     // startScreen.classList.add("hide");
@@ -84,11 +84,13 @@ function displayQuestion(){
             questionScreen.append(button);
         }
     }else {
+        questionScreen.classList.add("hide");
         endQuiz();
     }
 }
 
 function checkAnswer(event) {
+    correctAnswer.classList.remove("hide");
     if(event.target.value === questions[currentQuestionIndex].answer){
         correctAnswer.innerText = "That is correct! ";
     }else {
@@ -96,7 +98,7 @@ function checkAnswer(event) {
         timeLeft = Math.max(0, timeLeft - 5);
     }
 
-    correctAnswer.innerText += "  Correct answer: " + questions[currentQuestionIndex].answer;
+    correctAnswer.innerText += " Correct answer: " + questions[currentQuestionIndex].answer;
     currentQuestionIndex++; 
     displayQuestion();
 }
@@ -104,6 +106,8 @@ function checkAnswer(event) {
 
 
 function saveScore(){
+    questionScreen.classList.add("hide");
+    highScores.classList.remove("hide");
     var userInitials = prompt("Please enter your initials: ");
 
     if (userInitials) {
@@ -127,9 +131,12 @@ function saveScore(){
     }else{
         alert("Something went wrong. Score not saved. Please re-enter your initials.");
     }
+    
+    showHighScores();
 }
 
 function showHighScores(){
+    
     //retrieve scores that are saved in local storage
     var savedlocalScores = JSON.parse(localStorage.getItem("quizScores")) || [];
 
@@ -142,20 +149,20 @@ function showHighScores(){
         scoreItem.textContent = userScoreData.initials + userScoreData.score;
         highScores.appendChild(scoreItem);
     });
+    console.log ("I'm being hidden!")
 }
 
-function endQuiz() {
-        
+function endQuiz() {    
     clearInterval(timeInterval);
     finalScore.innerText = "Final Score:" + timeLeft;
     saveScore();
-    showHighScores();
+    
     
 }
 
 startButton.addEventListener("click", function(){
     console.log("Clicked start button")
-    
+    startButton.classList.remove("hide");
     
     startGame();
 })  

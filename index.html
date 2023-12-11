@@ -7,36 +7,30 @@
     <title>Code Quiz</title>
 </head>
 <body>
-    <div id="quiz-wrapper">
-        <!-- Container for the full quiz interface -->
-        <article id="start-screen">
+    <article>
+        <!-- quiz wrapper for full quiz interface? -->
+        <div id="start-screen">
             <header>
                 <h1>Code Quiz</h1>
             </header>
-            <button id="start-button" class="hide">Start</button>
-        </article>
+            <button id="start-button">Start</button>
+        </div>
 
-        <article id="quiz-container" class="hide">
-            <!-- Question bar and buttons -->
-            <h2 id="prompt"></h2>
-            <ul></ul>
-            <button id="next-question-button">Next Question</button>
-        </article>
+        <div id="question-screen" class="hide">
+            
+        </div>
+      
 
-        <!-- Container for time clock -->
-        <p id="timer">60</p>
+        <!-- need to figure out why these are no longer showing up when placed in the question-screen div -->
+            <p id="timer">60</p>
+            <p id="correct-answer"></p>
+            <p id="final-score"></p>
 
-        <p id="final-score"></p>
-
-        <!-- Save button -->
         
-        <article id="quiz-container" class="hide">
-            <button>Save</button>
-            <h2 id="high-scores">High Scores</h2>
-        </article>
-        <!-- Display correct answer message -->
-        <p id="correct-answer"></p>
-    </div>
+        <div id="high-scores" class="hide">
+            <h2 >High Scores</h2>
+        </div>       
+    </article>
 
     <script src="./assets/js/script.js"></script>
 </body>
